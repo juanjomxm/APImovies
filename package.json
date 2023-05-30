@@ -1,0 +1,11 @@
+{
+  "name": "apimovies",
+  "version": "1.0.0",
+  "description": "",
+  "main": "movies.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Juanjo A.Z",
+  "license": "MIT"
+}
