@@ -1,1 +1,1 @@
-console.log("Movies")
+const KEY_API = "53574b5a2a01901fcd5a04b11aced379"
