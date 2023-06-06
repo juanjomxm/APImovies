@@ -93,8 +93,14 @@ button {
   padding: 0 24px;
 }
 
-.trendingPreview-container, .categoriesPreview-container, footer {
+.trendingPreview-container{
   margin-top: 48px;
+}
+.categoriesPreview-container, footer {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .trendingPreview-header, .categoriesPreview-title {
@@ -234,7 +240,7 @@ button {
   width: 8px;
   height: 8px;
 }
-#id28 { --idColor: var(--yellow); }
+#id28 { --idColor: var(--purple-dark-1); }
 #id12 { --idColor: var(--red); }
 #id16 { --idColor: var(--green); }
 #id35 { --idColor: var(--lightBlue); }
