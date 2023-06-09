@@ -116,11 +116,15 @@ button {
 }
 
 .categoriesPreview-list, .categories-list {
-  display: flex;
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+    flex-direction: column;
+  /* display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
-  flex-wrap: wrap;
+  flex-wrap: wrap; */
 }
 
 

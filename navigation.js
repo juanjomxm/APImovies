@@ -1,21 +1,24 @@
 // const searchFormBtn = document.querySelector('#searchBtn')
 searchFormBtn.addEventListener('click', () =>{
-    location.hash = '#search='
+    trendsPage()
+    location.hash = `#search=${searchFormInput.value}`
+    
 })
 
 trendingBtn.addEventListener('click', () =>{
-    location.hash = '#trends'
+    location.hash = '#trends='
 })
 
 arrowBtn.addEventListener('click', () =>{
-    location.hash = '#home'
+    history.back() // Esta es la manera para hacer que un boton no se devuelva hasta el home sino que ejecuta como un historial de busqueda
+    // location.hash = '#home'
 })
 
 window.addEventListener('load', navigator)
 window.addEventListener('hashchange', navigator)
 function navigator(){
     
-    if(location.hash.startsWith('#trends')){
+    if(location.hash.startsWith('#trends=')){
         trendsPage()
     } else if(location.hash.startsWith('#search=')){
         searchPage()
@@ -26,6 +29,8 @@ function navigator(){
     } else {
         homePage()
     }
+    document.body.scrollTop = 0
+    document.documentElement.scrollTop = 0
 }
 
 function homePage(){
@@ -93,13 +98,17 @@ function searchPage(){
     arrowBtn.classList.remove('inactive')
     arrowBtn.classList.remove('header-arrow--white')
     headerTitle.classList.add('inactive')
-    headerCategoryTitle.classList.remove('inactive')
+    headerCategoryTitle.classList.add('inactive')
     searchForm.classList.remove('inactive')
 
     trendingPreviewSection.classList.add('inactive')
     categoriesPreviewSection.classList.add('inactive')
     genericSection.classList.remove('inactive')
     movieDetailSection.classList.add('inactive')
+
+    // ['#search', 'busqueda]
+    const [_,query] = location.hash.split('=')
+    getMoviesBySearch(query)
 }
 
 function trendsPage(){
@@ -117,4 +126,7 @@ function trendsPage(){
     categoriesPreviewSection.classList.add('inactive')
     genericSection.classList.remove('inactive')
     movieDetailSection.classList.add('inactive')
+
+    headerCategoryTitle.innerHTML = 'Tendencias'
+    getTrendingMovies() // Estamos llamando la funcion que hicimos en movies para obtener las tendencias
 }

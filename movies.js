@@ -8,12 +8,10 @@ const api = axios.create({
     }
 })
 
-async function getTrendingMoviesPreview(){
-    const {data} = await api.get('/trending/movie/day')
-    const movies = data.results
+// HELLPERS
 
-    trendingMoviesPreviewList.innerHTML = "" 
-
+function createMovies(movies, container){
+    container.innerHTML = ''
     movies.forEach(movie => {
         const movieContainer = document.createElement('div')
         movieContainer.classList.add('movie-container')
@@ -21,20 +19,17 @@ async function getTrendingMoviesPreview(){
         const movieImg = document.createElement('img')
         movieContainer.classList.add('movie-img')
         movieImg.setAttribute('alt', movie.title)
-        movieImg.setAttribute('src', 'https://image.tmdb.org/t/p/w300' + movie['backdrop_path'])
+        movieImg.setAttribute('src', 'https://image.tmdb.org/t/p/w300' + movie.poster_path)
+        //['backdrop_path']
 
         movieContainer.appendChild(movieImg)
-        trendingMoviesPreviewList.appendChild(movieContainer)
+        container.appendChild(movieContainer)
         
-    });
+    })
 }
 
-async function getCategoriesPreview(){
-    const {data} = await api.get('/genre/movie/list?language=es')
-    const categories = data.genres
-
-    categoriesPreviewList.innerHTML = ""
-
+function createCategories(categories, container){
+    container.innerHTML = ''
     categories.forEach(category =>{
         const categoryContainer = document.createElement('div')
         categoryContainer.classList.add('cayegory-container')
@@ -49,8 +44,22 @@ async function getCategoriesPreview(){
 
         cayegoryTitle.appendChild(categoryTitlteText)
         categoryContainer.appendChild(cayegoryTitle)
-        categoriesPreviewList.appendChild(categoryContainer)
+        container.appendChild(categoryContainer)
     })
+}
+
+// FUNCIONES ASINCRONAS
+
+async function getTrendingMoviesPreview(){
+    const {data} = await api.get('/trending/movie/day')
+    const movies = data.results
+    createMovies(movies, trendingMoviesPreviewList)
+}
+
+async function getCategoriesPreview(){
+    const {data} = await api.get('/genre/movie/list?language=es')
+    const categories = data.genres
+    createCategories(categories, categoriesPreviewList)
 }
 // Para agregar axios con npm desde la terminal debo ingresar a la carptea que cotengan los archivos para agregar el package.json
 
@@ -61,20 +70,21 @@ async function getMoviesByCategory(id){
         }
     })
     const movies = data.results
+    createMovies(movies, genericSection)
+}
 
-    genericSection.innerHTML = "" 
+async function getMoviesBySearch(query){
+    const {data} = await api.get('/search/movie', {
+        params: {
+            query
+        }
+    })
+    const movies = data.results
+    createMovies(movies, genericSection)
+}
 
-    movies.forEach(movie => {
-        const movieContainer = document.createElement('div')
-        movieContainer.classList.add('movie-container')
-
-        const movieImg = document.createElement('img')
-        movieContainer.classList.add('movie-img')
-        movieImg.setAttribute('alt', movie.title)
-        movieImg.setAttribute('src', 'https://image.tmdb.org/t/p/w300' + movie['poster_path'])
-
-        movieContainer.appendChild(movieImg)
-        genericSection.appendChild(movieContainer)
-        
-    });
+async function getTrendingMovies(){
+    const {data} = await api.get('/trending/movie/day')
+    const movies = data.results
+    createMovies(movies, genericSection)
 }
