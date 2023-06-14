@@ -1,8 +1,6 @@
-// const searchFormBtn = document.querySelector('#searchBtn')
 searchFormBtn.addEventListener('click', () =>{
     trendsPage()
-    location.hash = `#search=${searchFormInput.value}`
-    
+    location.hash = `#search=${searchFormInput.value}` // location.hash = es la manera de navegar en las diferentes ventanas que se pueden crear en una misma pagina
 })
 
 trendingBtn.addEventListener('click', () =>{
@@ -14,8 +12,8 @@ arrowBtn.addEventListener('click', () =>{
     // location.hash = '#home'
 })
 
-window.addEventListener('load', navigator)
-window.addEventListener('hashchange', navigator)
+window.addEventListener('load', navigator) 
+window.addEventListener('hashchange', navigator) // La manera como se va a ejecutar el hash porque es una propiedad de window
 function navigator(){
     
     if(location.hash.startsWith('#trends=')){
@@ -88,6 +86,10 @@ function movieDetailsPage(){
     categoriesPreviewSection.classList.add('inactive')
     genericSection.classList.add('inactive')
     movieDetailSection.classList.remove('inactive')
+
+    // ['#movie', 'id]
+    const [_,movieId] = location.hash.split('=')
+    getMoviesById(movieId)
 }
 
 function searchPage(){

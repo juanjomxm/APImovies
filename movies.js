@@ -4,7 +4,8 @@ const api = axios.create({
         'Content-Type': 'application/json;charset=utf-8'
     },
     params: {
-        'api_key': '53574b5a2a01901fcd5a04b11aced379'
+        'api_key': '53574b5a2a01901fcd5a04b11aced379',
+        'language': 'es'
     }
 })
 
@@ -15,13 +16,14 @@ function createMovies(movies, container){
     movies.forEach(movie => {
         const movieContainer = document.createElement('div')
         movieContainer.classList.add('movie-container')
-
-        const movieImg = document.createElement('img')
+        movieContainer.addEventListener('click', ()=>{
+            location.hash = `#movie=${movie.id}`  
+        })   
+        const movieImg = document.createElement('img')     
         movieContainer.classList.add('movie-img')
         movieImg.setAttribute('alt', movie.title)
-        movieImg.setAttribute('src', 'https://image.tmdb.org/t/p/w300' + movie.poster_path)
+        movieImg.setAttribute('src', 'https://image.tmdb.org/t/p/w300' + movie.poster_path )
         //['backdrop_path']
-
         movieContainer.appendChild(movieImg)
         container.appendChild(movieContainer)
         
@@ -64,7 +66,7 @@ async function getCategoriesPreview(){
 // Para agregar axios con npm desde la terminal debo ingresar a la carptea que cotengan los archivos para agregar el package.json
 
 async function getMoviesByCategory(id){
-    const {data} = await api.get('/discover/movie', {
+    const {data} = await api.get('/discover/movie?language=es', {
         params: {
             with_genres: id
         }
@@ -87,4 +89,31 @@ async function getTrendingMovies(){
     const {data} = await api.get('/trending/movie/day')
     const movies = data.results
     createMovies(movies, genericSection)
+}
+
+async function getMoviesById(id){
+    const { data: movie} = await api(`/movie/${id}`)
+
+    const movieImgUrl = 'https://image.tmdb.org/t/p/w500' + movie.poster_path
+    headerSection.style.background = `
+    linear-gradient(
+        180deg,
+        rgba(0,0,0,0.35) 19.27%,
+        rgba(0,0,0,0) 29.17%
+    ),
+    url(${movieImgUrl})`
+
+    movieDetailTitle.textContent = movie.title
+    movieDetailDescription.textContent = movie.overview
+    movieDetailScore.textContent = movie.vote_average 
+
+    createCategories(movie.genres, movieDetailCategoriesList)
+    getRelatedMoviesId(id)
+}
+
+async function getRelatedMoviesId(id){
+    const {data} = await api(`/movie/${id}/similar`)
+    const relatedMovies = data.results
+    
+    createMovies(relatedMovies, relatedMoviesContainer )
 }
