@@ -1,5 +1,4 @@
 searchFormBtn.addEventListener('click', () =>{
-    trendsPage()
     location.hash = `#search=${searchFormInput.value}` // location.hash = es la manera de navegar en las diferentes ventanas que se pueden crear en una misma pagina
 })
 
@@ -92,6 +91,26 @@ function movieDetailsPage(){
     getMoviesById(movieId)
 }
 
+function trendsPage(){
+    console.log('trends')
+
+    headerSection.classList.remove('header-container--long')
+    headerSection.style.background = ''
+    arrowBtn.classList.remove('inactive')
+    arrowBtn.classList.remove('header-arrow--white')
+    headerTitle.classList.add('inactive')
+    headerCategoryTitle.classList.remove('inactive')
+    searchForm.classList.add('inactive')
+
+    trendingPreviewSection.classList.add('inactive')
+    categoriesPreviewSection.classList.add('inactive')
+    genericSection.classList.remove('inactive')
+    movieDetailSection.classList.add('inactive')
+
+    headerCategoryTitle.innerHTML = 'Tendencias'
+    getTrendingMovies() // Estamos llamando la funcion que hicimos en movies para obtener las tendencias
+}
+
 function searchPage(){
     console.log('search')
 
@@ -111,24 +130,4 @@ function searchPage(){
     // ['#search', 'busqueda]
     const [_,query] = location.hash.split('=')
     getMoviesBySearch(query)
-}
-
-function trendsPage(){
-    console.log('trends')
-
-    headerSection.classList.remove('header-container--long')
-    headerSection.style.background = ''
-    arrowBtn.classList.remove('inactive')
-    arrowBtn.classList.remove('header-arrow--white')
-    headerTitle.classList.add('inactive')
-    headerCategoryTitle.classList.remove('inactive')
-    searchForm.classList.add('inactive')
-
-    trendingPreviewSection.classList.add('inactive')
-    categoriesPreviewSection.classList.add('inactive')
-    genericSection.classList.remove('inactive')
-    movieDetailSection.classList.add('inactive')
-
-    headerCategoryTitle.innerHTML = 'Tendencias'
-    getTrendingMovies() // Estamos llamando la funcion que hicimos en movies para obtener las tendencias
 }
