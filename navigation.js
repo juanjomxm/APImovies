@@ -1,4 +1,5 @@
 searchFormBtn.addEventListener('click', () =>{
+    trendsPage()
     location.hash = `#search=${searchFormInput.value}` // location.hash = es la manera de navegar en las diferentes ventanas que se pueden crear en una misma pagina
 })
 
