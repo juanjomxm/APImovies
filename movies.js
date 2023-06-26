@@ -1,4 +1,4 @@
-const api = axios.create({
+const api = axios.create({ // Creando la instancia para darle todos los parametros desde el principio
     baseURL: 'https://api.themoviedb.org/3',
     headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -11,7 +11,7 @@ const api = axios.create({
 
 // HELLPERS
 
-function createMovies(movies, container){
+function createMovies(movies, container){ // Esta funcion se debe crear para generar lo que va a aparecer en pantalla cuando se hagan las peticciones API. Mas adelante se debera utilizar para crear los contenedores de imagenes o secciones
     container.innerHTML = ''
     movies.forEach(movie => {
         const movieContainer = document.createElement('div')
@@ -114,6 +114,5 @@ async function getMoviesById(id){
 async function getRelatedMoviesId(id){
     const {data} = await api(`/movie/${id}/similar`)
     const relatedMovies = data.results
-    
     createMovies(relatedMovies, relatedMoviesContainer )
 }
